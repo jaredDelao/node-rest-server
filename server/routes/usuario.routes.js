@@ -4,7 +4,10 @@ const Usuario = require("../models/usuario.model");
 const bcrypt = require("bcrypt");
 const _ = require("underscore");
 
-app.get("/usuario", function(req, res) {
+const { verificaToken, verificaAdminRole } = require('../middlewares/autenticacion')
+
+app.get("/usuario", verificaToken , (req, res) => {
+
   let desde = req.query.desde || 0;
   desde = Number(desde);
 
@@ -32,7 +35,7 @@ app.get("/usuario", function(req, res) {
     });
 });
 
-app.post("/usuario", function(req, res) {
+app.post("/usuario", [verificaToken, verificaAdminRole], function(req, res) {
   let body = req.body;
   let { nombre, email, password, role } = body;
 
