@@ -34,7 +34,7 @@ let verificaToken = (req, res, next) => {
 // =====
  let verificaAdminRole = (req, res, next ) => {
 
-    let usuario = req.usuario;
+    let usuario = req.body;    
 
     if (usuario.role == 'ADMIN_ROLE') {
         next();

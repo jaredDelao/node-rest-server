@@ -25,7 +25,7 @@ app.get("/usuario", verificaToken , (req, res) => {
         });
       }
 
-      Usuario.count({}, (err, conteo) => {
+      Usuario.countDocuments({}, (err, conteo) => {
         res.json({
           ok: true,
           usuarios: usuariosDB,
@@ -35,7 +35,7 @@ app.get("/usuario", verificaToken , (req, res) => {
     });
 });
 
-app.post("/usuario", [verificaToken, verificaAdminRole], function(req, res) {
+app.post("/usuario", [verificaAdminRole], function(req, res) {
   let body = req.body;
   let { nombre, email, password, role } = body;
 
@@ -50,7 +50,7 @@ app.post("/usuario", [verificaToken, verificaAdminRole], function(req, res) {
     if (error) {
       return res.status(400).json({
         ok: false,
-        error
+        detect: error
       });
     }
 
